@@ -10,7 +10,7 @@
   >
     <div class="header-tip">
       <el-image :src="require('@/assets/logo.png')" style="width: 40px; margin: 10px 10px; vertical-align: middle;"></el-image>
-      大师工作室后台管理系统
+      企业后台管理系统
     </div>
     <div class="flex-grow"/>
     <el-sub-menu index="">
