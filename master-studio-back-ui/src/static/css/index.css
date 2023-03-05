@@ -1,0 +1,17 @@
+/** {*/
+/*    touch-action: pan-y;*/
+/*}*/
+
+html, body, #app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /*background-color: #303133;*/
+}
+
+h1 {
+    font-size: 2em;
+}
+.el-menu {
+    background-color: rgb(48, 49, 51) !important;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.liubaiblog.masterstudio.dao.mapper.PagePlateMapper">
+
+    <resultMap id="BaseResultMap" type="top.liubaiblog.masterstudio.domain.po.PagePlate">
+            <id property="pid" column="pid" jdbcType="BIGINT"/>
+            <result property="plateName" column="plate_name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="image" column="image" jdbcType="VARCHAR"/>
+            <result property="link" column="link" jdbcType="VARCHAR"/>
+            <result property="plateType" column="plate_type" jdbcType="TINYINT"/>
+            <result property="bindNav" column="bind_nav" jdbcType="BIGINT"/>
+            <result property="orderSeed" column="order_seed" jdbcType="TINYINT"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pid,plate_name,description,
+        image,link,plate_type,
+        bind_nav,order_seed,create_by,
+        create_time,update_by,update_time
+    </sql>
+</mapper>

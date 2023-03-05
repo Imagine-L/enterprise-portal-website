@@ -1,0 +1,73 @@
+spring:
+  # 数据源配置
+  datasource:
+    druid:
+      username: root
+      password: 123456
+      url: jdbc:mysql://127.0.0.1:3306/ms_db?&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      max-active: 100
+      initial-size: 20
+      min-idle: 5
+      max-wait: 2000
+  redis:
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 100
+        min-idle: 5
+  rabbitmq:
+    username: master
+    password: master123!
+    host: 192.168.20.128
+    port: 5672
+    virtual-host: /master
+  # 上传文件大小限制
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 1GB
+  #邮箱基本配置
+  mail:
+    #配置smtp服务主机地址
+    host: smtp.163.com
+    #发送者邮箱
+    username: master_fvti@163.com
+    #配置密码,注意不是真正的密码，而是刚刚申请到的授权码
+    password: JYLJUIUFYLTNYBCT
+    #端口号465或994
+    port: 994
+    #默认的邮件编码为UTF-8
+    default-encoding: UTF-8
+    #其他参数
+    properties:
+      mail:
+        #配置SSL 加密工厂
+        smtp:
+          ssl:
+            #本地测试，先放开ssl
+            enable: true
+            required: false
+          #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
+        debug: false
+server:
+  port: 5050
+swagger:
+  enable: true
+debug: true
+# 上传文件本地路径
+upload:
+  file:
+    save-path: E:\学习\项目\大师工作室官网\master-file
+# token的密钥和持续时间(ms)
+jwt:
+  secretKey: master-studio-website@#$%^&
+  expiration: 86400000
+# 忘记密码email的内容
+forget:
+  subject: 大师工作室后台-找回密码验证
+  type: html
+  text: '<hr/><p ><strong>尊敬的用户：&nbsp;您好!</strong></p><p>您正在进行<strong style="color: red;">修改密码</strong>操作，请在验证码输入框中输入：&nbsp;<strong style="color: rgb(45, 104, 214);">${code}</strong></p><p style="color: rgb(133, 131, 131); font-size: 13px;">注意: 此操作可能会修改您的密码，如非本人操作请忽视本邮件。<br/>(工作人员不会向您索取此验证码，请勿泄露)</p><hr/><p style="font-size: 15px; text-align: right;">此为系统邮件，请勿回复<br>请保管好您的邮箱，避免账号被他人盗用<br>何志清大师工作室</p>'
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

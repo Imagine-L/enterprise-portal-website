@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.liubaiblog.masterstudio.dao.mapper.LogMapper">
+
+    <resultMap id="BaseResultMap" type="top.liubaiblog.masterstudio.domain.po.Log">
+        <id property="lid" column="lid" jdbcType="BIGINT"/>
+        <result property="module" column="module" jdbcType="VARCHAR"/>
+        <result property="requestMode" column="request_mode" jdbcType="VARCHAR"/>
+        <result property="requestAddr" column="request_addr" jdbcType="VARCHAR"/>
+        <result property="requestJson" column="request_json" jdbcType="VARCHAR"/>
+        <result property="requestUser" column="request_user" jdbcType="BIGINT"/>
+        <result property="handlerMethod" column="handler_method" jdbcType="VARCHAR"/>
+        <result property="success" column="success" jdbcType="BIT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        lid
+        ,module,request_mode,
+        request_addr,request_json,request_user,
+        handler_method,success,oper_time
+    </sql>
+
+    <select id="pageByCondition" resultType="top.liubaiblog.masterstudio.domain.vo.log.LogPartVO">
+        select l.lid, l.module, l.oper_type,l.request_addr, l.request_mode, l.request_json, u.username request_user, l.success
+        from ms_log l
+        left join ms_user u on l.request_user = u.uid
+        <where>
+            <if test="module != null and module != ''">
+                l.module like "%"#{module}"%"
+            </if>
+            <if test="operType != null and operType != ''">
+                and l.oper_type like "%"#{operType}"%"
+            </if>
+            <if test="requestMode != null and requestMode != ''">
+                and l.request_mode = #{requestMode}
+            </if>
+            <if test="requestUser != null and requestUser != ''">
+                and u.username like "%"#{requestUser}"%"
+            </if>
+            <if test="createStartTime != null and createStartTime != ''">
+                and l.create_time &gt;= #{createStartTime}
+            </if>
+            <if test="createStopTime != null and createStopTime != ''">
+                and l.create_time &lt;= #{createStopTime}
+            </if>
+        </where>
+        order by l.create_time desc
+    </select>
+
+    <select id="selectDetailById" resultType="top.liubaiblog.masterstudio.domain.vo.log.LogDetailVO">
+        select l.lid,
+               l.module,
+               l.request_mode,
+               l.request_addr,
+               l.request_json,
+               u.username request_user,
+               l.handler_method,
+               l.success,
+               l.runtime,
+               l.oper_type,
+               l.error_message,
+               l.error_class,
+               l.create_time
+        from ms_log l
+                 left join ms_user u on l.request_user = u.uid where l.lid = #{lid}
+    </select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.liubaiblog.masterstudio.dao.mapper.ArticleMapper">
+
+    <resultMap id="BaseResultMap" type="top.liubaiblog.masterstudio.domain.po.Article">
+        <id property="aid" column="aid" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="htmlContent" column="html_content" jdbcType="VARCHAR"/>
+        <result property="navId" column="nav_id" jdbcType="BIGINT"/>
+        <result property="orderSeed" column="order_seed" jdbcType="TINYINT"/>
+        <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        aid
+        ,title,image,
+        summary,html_content,nav_id,
+        order_seed,create_by,create_time,
+        update_by,update_time
+    </sql>
+
+    <!-- Page<ArticlePartVO> pageByCondition(Page<ArticlePartVO> page,
+                                           @Param("title") String title,
+                                           @Param("author") String author, @Param("navId") Long navId); -->
+    <select id="pageByCondition" resultType="top.liubaiblog.masterstudio.domain.vo.article.ArticlePartVO">
+        select a.aid, a.title, a.summary, n.nav_name, u.nickname author, a.released, a.disabled
+        from ms_article a,
+        ms_user u,
+        ms_navigation n
+        where a.nav_id = n.nid
+        and a.create_by = u.uid
+        <if test="title != null and title != ''">
+            and a.title like "%"#{title}"%"
+        </if>
+        <if test="author != null and author != ''">
+            and u.nickname like "%"#{author}"%"
+        </if>
+        <if test="navId != null">
+            and a.nav_id = #{navId}
+        </if>
+        order by a.order_seed, a.create_time desc
+    </select>
+
+    <select id="selectDetailById" resultType="top.liubaiblog.masterstudio.domain.vo.article.ArticleDetailVO">
+        select a.aid,
+               a.title,
+               a.summary,
+               a.html_content,
+               a.nav_id,
+               n.nav_name,
+               a.order_seed,
+               a.released,
+               a.disabled,
+               u1.nickname author,
+               u1.username createBy,
+               a.create_time,
+               u2.username updateBy,
+               a.update_time
+        from ms_article a left join
+             ms_navigation n on a.nav_id = n.nid left join
+             ms_user u1 on a.create_by = u1.uid left join
+             ms_user u2 on a.update_by = u2.uid
+        where a.aid=#{aid}
+    </select>
+</mapper>

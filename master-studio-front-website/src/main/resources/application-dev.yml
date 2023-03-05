@@ -1,0 +1,21 @@
+# 服务端口
+server:
+  port: 5252
+spring:
+  # 数据源配置
+  datasource:
+    druid:
+      username: root
+      password: 123456
+      url: jdbc:mysql://127.0.0.1:3306/ms_db?&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      max-active: 100
+      initial-size: 20
+      min-idle: 5
+      max-wait: 2000
+# 是否开启接口文档
+swagger:
+  enable: true
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
